@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">android-task-tracker</string>
+    <string name="app_name">TaskTracker</string>
+    <string name="task_title_hint">Enter a name for the task.</string>
+    <string name="task_title_label">Title</string>
+    <string name="task_details_label">Details</string>
+    <string name="task_desc_hint">Enter a description of the task.</string>
+    <string name="date_picker_title">Due date:</string>
+    <string name="time_picker_title">Due time:</string>
+    <string name="new_task">New Task</string>
+    <string name="remove_task">Remove Task</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$s task</item>
+        <item quantity="other">%1$s tasks</item>
+    </plurals>
 </resources>
