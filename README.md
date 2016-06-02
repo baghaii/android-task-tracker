@@ -5,6 +5,5 @@ that uses features including Toolbar, Fragments, and RecyclerView.
 # todo
 1. The subtitle state is not maintained when a task is selected and the up button is
 used to return to the task list.
-2. When the screen is turned, the plus button to add a new task opens up an existing task instead of adding a new one.  Hitting the back button to leave the task creates another instance of the same task in the RecyclerView.
-3. Hitting the up button when a task hasn't been filled in should make it so the new task is not 
+2. Hitting the up button when a task hasn't been filled in should make it so the new task is not 
 created.
