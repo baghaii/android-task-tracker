@@ -34,8 +34,15 @@ public class TaskLab {
     }
 
     public void addTask(Task t) {
+        if (getTask(t.getId()) != null) {
+            while (getTask(t.getId()) != null) {
+                t.setId(t.getId() + 1);
+            }
+        }
+
         ContentValues values = getContentValues(t);
         mDatabase.insert(TaskTable.NAME, null, values);
+
     }
 
     public void removeTask(Task t) {
