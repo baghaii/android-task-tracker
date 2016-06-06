@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -145,7 +146,7 @@ public class TaskListFragment extends Fragment {
         public void bindTask(Task task) {
             mTask = task;
             mTitleTextView.setText(mTask.getTitle());
-            mDueDateTextView.setText(mTask.getDueDate().toString());
+            mDueDateTextView.setText(new SimpleDateFormat("MMM dd, yyyy hh:mm aa").format(mTask.getDueDate()));
         }
 
         @Override
