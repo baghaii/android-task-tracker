@@ -7,3 +7,4 @@ that uses features including Toolbar, Fragments, and RecyclerView.
 used to return to the task list.
 2. Hitting the up button when a task hasn't been filled in should make it so the new task is not 
 created.
+3. Learn to use the google API to integrate tasks with the Google Calendar.
