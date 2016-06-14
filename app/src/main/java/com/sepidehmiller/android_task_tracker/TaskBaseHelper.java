@@ -14,8 +14,9 @@ public class TaskBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "taskBase.db";
 
     public TaskBaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, VERSION);
+        this(context, DATABASE_NAME);
     }
+    public TaskBaseHelper(Context context, String dbName) { super(context, dbName, null, VERSION); }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

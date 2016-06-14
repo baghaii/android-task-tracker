@@ -8,6 +8,7 @@
     <string name="time_picker_title">Due time:</string>
     <string name="new_task">New Task</string>
     <string name="remove_task">Remove Task</string>
+    <string name="add_to_calendar">Move to Calendar</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <plurals name="subtitle_plural">

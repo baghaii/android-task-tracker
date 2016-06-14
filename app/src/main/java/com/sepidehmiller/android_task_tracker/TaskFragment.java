@@ -1,7 +1,10 @@
 package com.sepidehmiller.android_task_tracker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,21 +19,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.calendar.CalendarScopes;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by baghaii on 5/11/16.
  */
-public class TaskFragment extends Fragment {
+public class TaskFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
 
     private static final String ARG_TASK_ID = "task_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final String DIALOG_TIME = "DialogTime";
+    private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
 
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_TIME = 1;
+
+    GoogleAccountCredential mCredential;
 
     private Task mTask;
     private EditText mTitleField;
@@ -53,6 +70,10 @@ public class TaskFragment extends Fragment {
         setHasOptionsMenu(true);
         int taskId = getArguments().getInt(ARG_TASK_ID,0);
         mTask = TaskLab.get(getActivity()).getTask(taskId);
+
+        mCredential = GoogleAccountCredential.usingOAuth2(
+                getActivity().getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
     }
 
 
@@ -76,9 +97,47 @@ public class TaskFragment extends Fragment {
                 TaskLab.get(getActivity()).removeTask(mTask);
                 getActivity().finish();
                 return true;
+            case R.id.menu_item_to_calendar:
+                getResultFromApi();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /** Attempt to call the Google Calendar API **/
+    private void getResultFromApi() {
+        if (!isGooglePlayServicesAvailable() ) {
+            Toast.makeText(getActivity(), "Services Unavailable", Toast.LENGTH_SHORT).show();
+        } else if (mCredential.getSelectedAccount() == null) {
+            Toast.makeText(getActivity(), "Pick an account", Toast.LENGTH_SHORT).show();
+        } else if (! isDeviceOnline()) {
+            Toast.makeText(getActivity(), "Connect to the internet", Toast.LENGTH_SHORT).show();
+        } else {
+
+        }
+    }
+
+    /** Check whether the device curently has a connection. */
+
+    private boolean isDeviceOnline() {
+        ConnectivityManager connMgr =
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    /**
+     * Check that Google Play services APK is installed and up to date.
+     * @return true if Google Play Services is available and up to
+     *     date on this device; false otherwise.
+     */
+    private boolean isGooglePlayServicesAvailable() {
+        GoogleApiAvailability apiAvailability =
+                GoogleApiAvailability.getInstance();
+        final int connectionStatusCode =
+                apiAvailability.isGooglePlayServicesAvailable(getContext());
+        return connectionStatusCode == ConnectionResult.SUCCESS;
     }
 
     @Nullable
@@ -179,5 +238,15 @@ public class TaskFragment extends Fragment {
 
     private void updateTime() {
         mDueTimeButton.setText(new SimpleDateFormat("hh:mm aa").format(mTask.getDueDate()));
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
     }
 }

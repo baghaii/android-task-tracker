@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_menu_remove"
         android:title="@string/remove_task"
         app:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/menu_item_to_calendar"
+        android:icon="@drawable/ic_add_calendar"
+        android:title="@string/add_to_calendar"
+        app:showAsAction="ifRoom|withText"/>
 </menu>

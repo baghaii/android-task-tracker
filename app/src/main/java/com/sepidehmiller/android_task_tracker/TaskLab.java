@@ -27,9 +27,23 @@ public class TaskLab {
         return sTaskLab;
     }
 
+    public static TaskLab get(Context context, String dbName) {
+        if (sTaskLab == null) {
+            sTaskLab = new TaskLab(context, dbName);
+        }
+
+        return sTaskLab;
+    }
+
     private TaskLab(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new TaskBaseHelper(mContext)
+                .getWritableDatabase();
+    }
+
+    private TaskLab(Context context, String dbName) {
+        mContext = context.getApplicationContext();
+        mDatabase = new TaskBaseHelper(mContext, dbName)
                 .getWritableDatabase();
     }
 

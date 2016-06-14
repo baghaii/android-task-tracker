@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
  * Created by baghaii on 6/6/16.
  */
 
+
 public class TaskTest {
 
     private static final String FAKE_TITLE = "Fake Title";
